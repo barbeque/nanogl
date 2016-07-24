@@ -2,7 +2,7 @@
 
 
 # nanogl
-webgl micro framework (3Ko)
+webgl micro framework (3.2Ko)
 
 #### Quick guides
 
@@ -11,6 +11,7 @@ webgl micro framework (3Ko)
   - [FBO](docs/fbo.md)
   - [ArrayBuffer](docs/arraybuffer.md)
   - [IndexBuffer](docs/indexbuffer.md)
+  - [Vao](docs/vao.md)
 
 
 #### API

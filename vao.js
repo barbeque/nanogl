@@ -1,5 +1,12 @@
 
 
+/**
+ * @class
+ * @classdesc Vao manage attributes pointers setup for given arraybuffer and program
+ * It provide a transparent fallback if extension isn't available
+ *
+ *  @param {WebGLRenderingContext} gl webgl context the vao belongs to
+ */
 function Vao( gl ){
   this.gl = gl;
 
@@ -13,16 +20,23 @@ function Vao( gl ){
 
 }
 
+
 Vao.prototype = {
 
-
+  /**
+    * release the internal webgl vao
+    */
   dispose : function(){
     this._impl.dispose();
     this._impl = null;
     this._ext = null;
   },
 
-
+  /**
+   * Initialize attrib pointer setup for given program and arraybuffers
+   *   @param {Program} prg the nanogl Program
+   *   @param {ArrayBuffer[]} buffers an array of ArrayBuffers containing the attributes
+   */
   setup : function( prg, buffers ){
     if( !prg.ready ){
       prg._grabParameters();
@@ -30,12 +44,17 @@ Vao.prototype = {
     this._impl.setup( prg, buffers );
   },
 
-
+  /**
+   * Bind the VAO. Call this method before each draw call
+   */
   bind : function(){
     this._impl.bind();
   },
 
 
+  /**
+   * Unbind the VAO. Call this method after each draw call
+   */
   unbind : function(){
     this._impl.unbind();
   }
