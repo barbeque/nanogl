@@ -6,6 +6,10 @@ var gl = testContext.getContext();
 
 Program.debug = true
 
+
+
+
+
 describe( "Program GLSL1", function(){
 
   it( "should be exported in nanogl namespace", function(){

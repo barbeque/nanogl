@@ -124,6 +124,22 @@ Program.prototype = {
       ublockIndex : 0
     };
 
+    // UniformBlock
+    // ============
+
+    if( gl.ACTIVE_UNIFORM_BLOCKS !== undefined ) {
+
+      var numBlocks = gl.getProgramParameter( prg, gl.ACTIVE_UNIFORM_BLOCKS );
+
+      for ( var blockIndex = 0; blockIndex < numBlocks; ++blockIndex )
+      {
+        var blockName = gl.getActiveUniformBlockName( prg, blockIndex );
+        this[blockName] = getUniformBufferSetFunction( blockIndex, gl, context );
+        this.dyns.push( blockName );
+      }
+
+    }
+
     // Uniforms
     // ========
 
@@ -144,7 +160,7 @@ Program.prototype = {
           n       = uName.indexOf('[');
 
       if( n >= 0 ){
-        uName = uName.substring(0, n);
+        uName = uName.substring(0, n); 
       }
 
       var uLocation = gl.getUniformLocation( prg, uniform.name );
@@ -154,6 +170,8 @@ Program.prototype = {
       {
         this[uName] = getUniformSetter( uniform.type, uLocation, gl, context );
         this.dyns.push( uName );
+      } else {
+        // here attach this uniform to the block somehow
       }
     }
 
@@ -171,21 +189,6 @@ Program.prototype = {
     }
 
 
-    // UniformBlock
-    // ============
-
-    if( gl.ACTIVE_UNIFORM_BLOCKS !== undefined ) {
-
-      var numBlocks = gl.getProgramParameter( prg, gl.ACTIVE_UNIFORM_BLOCKS );
-
-      for ( var blockIndex = 0; blockIndex < numBlocks; ++blockIndex )
-      {
-        var blockName = gl.getActiveUniformBlockName( prg, blockIndex );
-        this[blockName] = getUniformBufferSetFunction( blockIndex, gl, context );
-        this.dyns.push( blockName );
-      }
-
-    }
 
     this.ready   = true;
   }
@@ -381,6 +384,7 @@ function getAttribAccess( attrib ){
     return attrib;
   };
 }
+
 
 
 
